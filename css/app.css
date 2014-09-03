@@ -1,0 +1,7 @@
+li.active a {
+	font-weight: bold;
+}
+
+#code .code {
+	height: 600px;
+}

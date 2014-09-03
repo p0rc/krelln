@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="krelln">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Processing.js editor</title>
+
+		<!-- Bootstrap -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+		<link href="css/app.css" rel="stylesheet">
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body class="ace-monokai">
+
+		<div id="krelln">
+			<div id="menu" ng-controller="SketchController as Sketch">
+				<button type="button" id="action_run" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-play"></span> Run</button>
+
+				<button type="button" id="action_save" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-save"></span> Save</button>
+				<div class="btn-group btn-group-sm">
+					<button type="button" id="action_reload" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-open"></span> Reload</button>
+					
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						<span class="caret"></span>
+						<span class="sr-only">Toggle Dropdown</span>
+					</button>
+					<ul class="dropdown-menu" role="menu" id="list_sketches">
+						<li ng-repeat="file in Sketch.files"><a ng-click="Sketch.loadProject(file)" class="sketchload">{{file.filename}}</a>
+						<li class="divider"></li>
+						<li><a href="#" class="sketchload">default.pde</a></li>
+					</ul>
+
+				</div>
+				<button type="button" id="action_export" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-picture"></span> Screenshot</button>
+			</div>
+			<div id="content" ng-controller="TabController as tab">
+				<div id="tabs">
+					<ul class="nav nav-tabs">
+						<li ng-repeat="t in tab.tabs" ng-class="{active:tab.isActive(t.id)}"><a ng-click="tab.setTab(t.id)">{{t.filename}}</a></li>
+						<li><a ng-click="tab.addTab({id:tab.tabs.length, filename:'test.pde',data:'dhuaiez'})">New Tab</a></li>
+					</ul>
+				</div>
+				<div id="code" ng-controller="editor">
+					<div class="code" ng-repeat="t in tab.tabs" ng-show="tab.isActive(t.id)" ng-model="content" id="code{{t.id}}" ace></div>
+				</div>
+			</div>
+			<div id="console"></div>
+		</div>
+		
+		<script src="js/require.js"></script>
+		<script src="js/processing.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>
